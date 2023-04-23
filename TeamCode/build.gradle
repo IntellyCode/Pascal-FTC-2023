@@ -1,0 +1,31 @@
+
+
+// Include common definitions from above.
+apply from: '../build.common.gradle'
+apply from: '../build.dependencies.gradle'
+
+android {
+    namespace = 'org.firstinspires.ftc.teamcode'
+    androidResources {
+        noCompress 'tflite'
+    }
+
+    packagingOptions {
+        jniLibs {
+            pickFirsts += ['**/*.so']
+        }
+        jniLibs.useLegacyPackaging true
+    }
+}
+repositories{
+    maven { url = 'https://maven.brott.dev/' }
+}
+dependencies {
+    implementation project(':FtcRobotController')
+    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    implementation 'org.openftc:easyopencv:1.6.2'
+    implementation ('com.acmerobotics.dashboard:dashboard:0.4.9') {
+        exclude group: 'org.firstinspires.ftc'
+    }
+}
